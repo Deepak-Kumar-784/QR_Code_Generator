@@ -1,8 +1,8 @@
 # import qrcode as qr
 # img = qr.make(
-#     "https://www.youtube.com/watch?v=p5W90_d1sDw&list=RDp5W90_d1sDw&start_radio=1"
+#     "TYPE_PASTE_URl"
 # )
-# img.save("wscube_youtube.jpeg")
+# img.save("QRCodeImage.jpeg")
 
 # Import the required libraries
 import qrcode  # Library to generate QR codes
