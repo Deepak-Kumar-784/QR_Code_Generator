@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 from typing import Optional, Union
 
@@ -36,16 +37,19 @@ def generate_qr(
         box_size=box_size,
         border=border,
     )
+    logging.debug("Adding data to QR code (%d chars)", len(data))
     qr.add_data(data)
     qr.make(fit=True)
     img = qr.make_image(fill_color=fill_color, back_color=back_color)
     out_path = Path(output_path)
+    logging.info("Writing QR image to %s", out_path)
     img.save(out_path)
     return out_path
 
 
 def main() -> None:
     # Default behavior preserved for direct execution
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     generate_qr(
         data="YOUR_URL_HERE",
         output_path="qr_code_image.jpeg",

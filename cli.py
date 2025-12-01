@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import logging
 import sys
 from pathlib import Path
 from typing import Optional
@@ -35,6 +36,9 @@ def _parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
     p.add_argument(
         "--back", type=str, default="white", help="Background color (name or #RRGGBB)"
     )
+    v = p.add_mutually_exclusive_group()
+    v.add_argument("--verbose", action="store_true", help="Enable verbose logging")
+    v.add_argument("--quiet", action="store_true", help="Suppress informational logs")
     return p.parse_args(argv)
 
 
@@ -46,6 +50,12 @@ def _validate_colors(fill: str, back: str) -> None:
 
 def main(argv: Optional[list[str]] = None) -> int:
     args = _parse_args(argv)
+    level = logging.INFO
+    if args.verbose:
+        level = logging.DEBUG
+    if args.quiet:
+        level = logging.WARNING
+    logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
     data: str
     if args.data is not None:
         data = args.data
