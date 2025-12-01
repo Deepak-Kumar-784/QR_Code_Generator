@@ -15,12 +15,12 @@ def _parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Generate QR codes from data or files.")
     src = p.add_mutually_exclusive_group(required=True)
     src.add_argument("--data", type=str, help="Data string to encode (use quotes)")
-        src.add_argument("--infile", type=Path, help="Path to a text file with data")
+    src.add_argument("--infile", type=Path, help="Path to a text file with data")
     p.add_argument(
         "--out",
         type=Path,
         default=Path("qr_code_image.png"),
-            help="Output image path (extension determines format; use .svg for vector)"
+        help="Output image path (extension determines format; use .svg for vector)",
     )
     p.add_argument(
         "--version", type=int, default=None, help="QR version 1-40 (omit to auto-fit)"
