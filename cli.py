@@ -15,12 +15,12 @@ def _parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Generate QR codes from data or files.")
     src = p.add_mutually_exclusive_group(required=True)
     src.add_argument("--data", type=str, help="Data string to encode (use quotes)")
-    src.add_argument("--infile", type=Path, help="Path to a text file with data")
+        src.add_argument("--infile", type=Path, help="Path to a text file with data")
     p.add_argument(
         "--out",
         type=Path,
         default=Path("qr_code_image.png"),
-        help="Output image path (extension determines format)",
+            help="Output image path (extension determines format; use .svg for vector)"
     )
     p.add_argument(
         "--version", type=int, default=None, help="QR version 1-40 (omit to auto-fit)"
@@ -88,6 +88,22 @@ def main(argv: Optional[list[str]] = None) -> int:
             print(f"error: cannot create directory {parent}: {e}", file=sys.stderr)
             return 2
 
+        try:
+            generate_qr(
+                data=data,
+                output_path=args.out,
+                version=args.version,
+                error_correction=args.ec,
+                box_size=args.box_size,
+                border=args.border,
+                fill_color=args.fill,
+                back_color=args.back,
+                logo_path=args.logo,
+                logo_size_percent=args.logo_size,
+            )
+        except Exception as e:
+            logging.error("Failed to generate QR code: %s", e)
+            return 2
     generate_qr(
         data=data,
         output_path=args.out,
