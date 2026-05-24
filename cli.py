@@ -104,16 +104,6 @@ def main(argv: Optional[list[str]] = None) -> int:
         except Exception as e:
             logging.error("Failed to generate QR code: %s", e)
             return 2
-    generate_qr(
-        data=data,
-        output_path=args.out,
-        version=args.version,
-        error_correction=args.ec,
-        box_size=args.box_size,
-        border=args.border,
-        fill_color=args.fill,
-        back_color=args.back,
-    )
     return 0
 
 
